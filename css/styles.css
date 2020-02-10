@@ -11,6 +11,13 @@ body {
 
 #app {
   padding: 25px;
+  opacity: 1;
+  transition: opacity, filter 0.2s, 0.2s;
+}
+
+#app.transparent {
+  opacity: 0;
+  filter: blur(2px);
 }
 
 #background {

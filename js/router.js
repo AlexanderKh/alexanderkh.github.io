@@ -16,29 +16,34 @@ function setActive(menuItem) {
     }
 }
 
-function selectMenuItem(menuItem) {
+function selectMenuItem(menuItem, animate = true) {
     setActive(menuItem);
     const url = `views/${menuItem}.html`;
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            appElement.innerHTML = this.responseText;
+    const promises = [
+        promisifiedGet(url),
+    ];
+    if (animate) {
+        appElement.classList.add('transparent');
+        promises.push(promisifiedWait(200));
+    }
+    Promise.all(promises).then(([contents, _]) => {
+        appElement.innerHTML = contents;
+        if (animate) {
+            appElement.classList.remove('transparent');
         }
-    };
-    xhttp.open('GET', url, true);
-    xhttp.send();
+    })
 }
 
-function selectHashLocation() {
+function selectHashLocation(animate = true) {
     if (menuItemHrefs.indexOf(location.hash) !== -1) {
-        selectMenuItem(location.hash.replace('#', ''));
+        selectMenuItem(location.hash.replace('#', ''), animate);
     } else {
-        selectMenuItem('info');
+        selectMenuItem('info', animate);
     }
 }
 
 window.addEventListener('hashchange', () => {
-    selectHashLocation();
+    selectHashLocation(true);
 });
 
-selectHashLocation();
+selectHashLocation(false);
