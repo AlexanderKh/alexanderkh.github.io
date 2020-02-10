@@ -16,7 +16,7 @@ body {
 #background {
   opacity: 0.1;
   z-index: -1;
-  background: -webkit-radial-gradient(50% 50%, ellipse, rgba(32, 32, 45, 0.26) 0%, rgba(16, 16, 24, 0.25) 75%, rgba(6, 6, 18, 0.25) 100%);
+  background-color: #f8f8f8;
   position: absolute;
   left: 0;
   top: 0;

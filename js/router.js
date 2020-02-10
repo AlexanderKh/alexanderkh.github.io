@@ -1,61 +1,44 @@
-'use strict';
 
-function Router(routes) {
-    try {
-        if (!routes) {
-            throw 'error: routes param is mandatory';
+
+const menuItemHrefs = Array.from(window.document.getElementsByClassName('menu-item')).map((htmlElement) => {
+    return htmlElement.getAttribute('href');
+});
+
+const appElement = document.getElementById('app');
+
+function setActive(menuItem) {
+    for (const htmlElement of window.document.getElementsByClassName('menu-item')) {
+        if (htmlElement.getAttribute('href').replace('#', '') === menuItem) {
+            htmlElement.parentElement.classList.add('active');
+        } else {
+            htmlElement.parentElement.classList.remove('active');
         }
-        this.constructor(routes);
-        this.init();
-    } catch (e) {
-        console.error(e);   
     }
 }
 
-Router.prototype = {
-    routes: undefined,
-    rootElem: undefined,
-    constructor: function (routes) {
-        this.routes = routes;
-        this.rootElem = document.getElementById('app');
-    },
-    init: function () {
-        var r = this.routes;
-        (function(scope, r) { 
-            window.addEventListener('hashchange', function (e) {
-                scope.hasChanged(scope, r);
-            });
-        })(this, r);
-        this.hasChanged(this, r);
-    },
-    hasChanged: function(scope, r){
-        if (window.location.hash.length > 0) {
-            for (var i = 0, length = r.length; i < length; i++) {
-                var route = r[i];
-                if(route.isActiveRoute(window.location.hash.substr(1))) {
-                    scope.goToRoute(route.htmlName);
-                }
-            }
-        } else {
-            for (var i = 0, length = r.length; i < length; i++) {
-                var route = r[i];
-                if (route.default) {
-                    scope.goToRoute(route.htmlName);
-                }
-            }
+function selectMenuItem(menuItem) {
+    setActive(menuItem);
+    const url = `views/${menuItem}.html`;
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            appElement.innerHTML = this.responseText;
         }
-    },
-    goToRoute: function (htmlName) {
-        (function(scope) { 
-            var url = 'views/' + htmlName,
-                xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    scope.rootElem.innerHTML = this.responseText;
-                }
-            };
-            xhttp.open('GET', url, true);
-            xhttp.send();
-        })(this);
+    };
+    xhttp.open('GET', url, true);
+    xhttp.send();
+}
+
+function selectHashLocation() {
+    if (menuItemHrefs.indexOf(location.hash) !== -1) {
+        selectMenuItem(location.hash.replace('#', ''));
+    } else {
+        selectMenuItem('info');
     }
-};
+}
+
+window.addEventListener('hashchange', () => {
+    selectHashLocation();
+});
+
+selectHashLocation();
