@@ -1,0 +1,63 @@
+header {
+  width: 100%;
+  padding: 25px;
+}
+
+header .header-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+header .menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+}
+
+header .menu-item {
+  padding: 5px;
+  z-index: 5;
+  position: relative;
+}
+
+header .menu .menu-item .menu-item-link {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+
+  color: black;
+
+  transition: color 1s, 1s;
+}
+header .menu .menu-item .menu-item-link ~ .menu-item-background {
+  z-index: -1;
+  background-color: black;
+  pointer-events: none;
+  border-radius: 2px;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+
+  transform: scale(2);
+  filter: blur(4px);
+  opacity: 0;
+
+  transition: transform, filter, opacity 1s, 1s;
+}
+
+header .menu .menu-item .menu-item-link:hover {
+  color: white;
+  transition: color 1s;
+}
+
+header .menu .menu-item .menu-item-link:hover ~ .menu-item-background {
+  transform: scale(1);
+  filter: blur(0px);
+  opacity: 1;
+}
