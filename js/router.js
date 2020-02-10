@@ -9,9 +9,9 @@ const appElement = document.getElementById('app');
 function setActive(menuItem) {
     for (const htmlElement of window.document.getElementsByClassName('menu-item')) {
         if (htmlElement.getAttribute('href').replace('#', '') === menuItem) {
-            htmlElement.parentElement.classList.add('active');
+            htmlElement.classList.add('active');
         } else {
-            htmlElement.parentElement.classList.remove('active');
+            htmlElement.classList.remove('active');
         }
     }
 }
