@@ -3,7 +3,49 @@ header {
   padding: 25px;
 }
 
-header .header-title {
+header .header-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .header-row .header-row-separator {
+  min-width: 10px;
+  height: 0;
+}
+
+header .header-row .header-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+header .header-row .header-links .header-link-link {
+  width: 36px;
+  height: 36px;
+  margin: 2px;
+  padding: 3px;
+  border-radius: 2.5px;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: 0.5s;
+}
+
+header .header-row .header-links .header-link-link:hover {
+  filter: invert();
+  background-color: white;
+}
+
+header .header-row .header-links .header-link-link img {
+  width: 30px;
+  height: 30px;
+}
+
+header .header-row .header-title {
   font-family: 'Orbitron', sans-serif;
   font-weight: bold;
   font-size: 28px;
